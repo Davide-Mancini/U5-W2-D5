@@ -3,6 +3,7 @@ package davidemancini.U5_W2_D5.services;
 import davidemancini.U5_W2_D5.entities.Dipendente;
 import davidemancini.U5_W2_D5.entities.Viaggio;
 import davidemancini.U5_W2_D5.exceptions.NotFoundException;
+import davidemancini.U5_W2_D5.payloads.NewStatoViaggioDTO;
 import davidemancini.U5_W2_D5.payloads.NewViaggioDTO;
 import davidemancini.U5_W2_D5.repositories.ViaggiRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +35,7 @@ public class ViaggioService {
     }
     public Viaggio findByIdAndUpdate(UUID id, NewViaggioDTO body){
         Viaggio trovato = findById(id);
-        trovato.setData_viaggio(body.data_viaggio());
+        trovato.setDataViaggio(body.data_viaggio());
         trovato.setDestinazione(body.destinazione());
         Viaggio viaggioModificato = viaggiRepository.save(trovato);
         return viaggioModificato;
@@ -42,5 +43,13 @@ public class ViaggioService {
     public void findByIdAndDelete(UUID id){
         Viaggio trovato = findById(id);
         viaggiRepository.delete(trovato);
+    }
+    //MODIFICA DELLO STATO DEL VIAGGIO
+    public Viaggio findBYIdAndUpdateStato(UUID id, NewStatoViaggioDTO body){
+        Viaggio viaggioTrovato = findById(id);
+        viaggioTrovato.setStato(body.stato());
+        Viaggio viaggioModificato = viaggiRepository.save(viaggioTrovato);
+        return viaggioModificato;
+
     }
 }

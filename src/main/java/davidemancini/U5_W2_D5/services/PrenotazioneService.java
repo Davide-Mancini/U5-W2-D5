@@ -3,6 +3,7 @@ package davidemancini.U5_W2_D5.services;
 import davidemancini.U5_W2_D5.entities.Dipendente;
 import davidemancini.U5_W2_D5.entities.Prenotazione;
 import davidemancini.U5_W2_D5.entities.Viaggio;
+import davidemancini.U5_W2_D5.exceptions.MyBadRequestException;
 import davidemancini.U5_W2_D5.exceptions.NotFoundException;
 import davidemancini.U5_W2_D5.payloads.NewPrenotazioneDTO;
 import davidemancini.U5_W2_D5.repositories.DipendenteRepository;
@@ -27,13 +28,15 @@ public class PrenotazioneService {
     @Autowired
     private ViaggiRepository viaggiRepository;
 
-    public Prenotazione save(NewPrenotazioneDTO body) throws BadRequestException {
+    public Prenotazione save(NewPrenotazioneDTO body) {
         Dipendente dipendenteTrovato = dipendenteRepository.findById(body.dipendente()).orElseThrow(()-> new NotFoundException(body.dipendente()));
         Viaggio viaggioTrovato = viaggiRepository.findById(body.viaggio()).orElseThrow(()-> new NotFoundException(body.viaggio()));
         Prenotazione newPrenotazione = new Prenotazione(body.data_richiesta(), body.note(), dipendenteTrovato,viaggioTrovato);
-        //CONTROLLO GIUSTO SULLA DATA DEL NUOVO VIAGGIO 
-        if (newPrenotazione.getViaggio().getData_viaggio().equals(viaggioTrovato.getData_viaggio())){
-            throw new BadRequestException("Non puoi prenotare due viaggi con la stessa data");
+
+        //CONTROLLO SULLA DATA DEL NUOVO VIAGGIO
+        boolean prenotazioneStessaData= prenotazioneRepository.existsByDipendenteAndViaggio_DataViaggio(dipendenteTrovato,viaggioTrovato.getDataViaggio());
+        if (prenotazioneStessaData){
+            throw new MyBadRequestException("Non puoi prenotare due viaggi con la stessa data");
         }
         return prenotazioneRepository.save(newPrenotazione);
     }

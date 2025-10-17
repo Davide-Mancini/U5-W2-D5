@@ -4,6 +4,7 @@ import davidemancini.U5_W2_D5.entities.Dipendente;
 import davidemancini.U5_W2_D5.entities.Viaggio;
 import davidemancini.U5_W2_D5.exceptions.MyValidationException;
 import davidemancini.U5_W2_D5.payloads.NewDipendenteDTO;
+import davidemancini.U5_W2_D5.payloads.NewStatoViaggioDTO;
 import davidemancini.U5_W2_D5.payloads.NewViaggioDTO;
 import davidemancini.U5_W2_D5.services.ViaggioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,4 +58,14 @@ public class ViaggioController {
         }
         return viaggioService.findByIdAndUpdate(travelsId,body);
     }
+
+    //MODIFICA STATO DEL VIAGGIO
+    @PatchMapping("/{travelsId}")
+    public Viaggio findByIdAndUpdateStato (@PathVariable UUID travelsId, @RequestBody @Validated NewStatoViaggioDTO body, BindingResult bindingResult){
+        if (bindingResult.hasErrors()){
+            throw new MyValidationException(bindingResult.getFieldErrors().stream().map(fieldError -> fieldError.getDefaultMessage()).toList());
+        }
+        return viaggioService.findBYIdAndUpdateStato(travelsId,body);
+    }
+
 }

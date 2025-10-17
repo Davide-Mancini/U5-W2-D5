@@ -1,9 +1,6 @@
 package davidemancini.U5_W2_D5.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -21,13 +18,14 @@ public class Viaggio {
     @Setter(AccessLevel.NONE)
     private UUID id;
     private String destinazione;
-    private LocalDate data_viaggio;
+    private LocalDate dataViaggio;
+    @Enumerated(EnumType.STRING)
     private Stato stato;
     //COSTRUTTORE
 
     public Viaggio(String destinazione, LocalDate data_viaggio, Stato stato) {
         this.destinazione = destinazione;
-        this.data_viaggio = data_viaggio;
+        this.dataViaggio = data_viaggio;
         this.stato = stato;
     }
 }
