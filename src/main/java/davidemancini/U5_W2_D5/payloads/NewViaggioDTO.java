@@ -1,5 +1,6 @@
 package davidemancini.U5_W2_D5.payloads;
 
+import davidemancini.U5_W2_D5.entities.Stato;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -11,6 +12,6 @@ public record NewViaggioDTO(
         @NotNull
         LocalDate data_viaggio,
         @NotBlank
-        String stato
+        Stato stato
 ) {
 }

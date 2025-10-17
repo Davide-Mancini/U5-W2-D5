@@ -23,4 +23,11 @@ public class Viaggio {
     private String destinazione;
     private LocalDate data_viaggio;
     private Stato stato;
+    //COSTRUTTORE
+
+    public Viaggio(String destinazione, LocalDate data_viaggio, Stato stato) {
+        this.destinazione = destinazione;
+        this.data_viaggio = data_viaggio;
+        this.stato = stato;
+    }
 }
