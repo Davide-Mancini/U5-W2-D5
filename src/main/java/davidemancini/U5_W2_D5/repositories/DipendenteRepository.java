@@ -9,5 +9,6 @@ import java.util.UUID;
 
 @Repository
 public interface DipendenteRepository extends JpaRepository<Dipendente, UUID> {
+    //QUERY DERIVATA CHE RICERCA PER EMIAL
     Optional<Dipendente> findByEmail(String email);
 }

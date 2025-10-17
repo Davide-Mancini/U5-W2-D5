@@ -29,6 +29,7 @@ public class PrenotazioneService {
     @Autowired
     private ViaggiRepository viaggiRepository;
 
+    //SALVATAGGIO NUOVA PRENOTAZIONE
     public Prenotazione save(NewPrenotazioneDTO body) {
         Dipendente dipendenteTrovato = dipendenteRepository.findById(body.dipendente()).orElseThrow(()-> new NotFoundException(body.dipendente()));
         Viaggio viaggioTrovato = viaggiRepository.findById(body.viaggio()).orElseThrow(()-> new NotFoundException(body.viaggio()));
@@ -41,14 +42,20 @@ public class PrenotazioneService {
         }
         return prenotazioneRepository.save(newPrenotazione);
     }
+
+    //TORNA TUTTE LE PRENOTAZIONE CON PAGINAZIONE
     public Page<Prenotazione> findAll(int pageNumber, int pageSize, String pageSortBy){
         if(pageSize>30) pageSize=30;
         Pageable pageable = PageRequest.of(pageNumber,pageSize, Sort.by(pageSortBy));
         return prenotazioneRepository.findAll(pageable);
     }
+
+    //RICERCA TRAMITE ID
     public Prenotazione findById (UUID id){
         return prenotazioneRepository.findById(id).orElseThrow(()-> new NotFoundException(id));
     }
+
+    //RICERCA TRAMITE ID E UPDATE
     public Prenotazione findByIdAndUpdate(UUID id, NewPrenotazioneDTO body){
         Dipendente dipendenteTrovato = dipendenteRepository.findById(body.dipendente()).orElseThrow(()-> new NotFoundException(body.dipendente()));
         Viaggio viaggioTrovato = viaggiRepository.findById(body.viaggio()).orElseThrow(()-> new NotFoundException(body.viaggio()));
@@ -60,9 +67,11 @@ public class PrenotazioneService {
         Prenotazione prenotazioneModificata = prenotazioneRepository.save(trovata);
         return prenotazioneModificata;
     }
+
+    //RIERCA TRAMITE ID E DELETE
     public void findByIdAndDelete(UUID id){
         Prenotazione trovata = findById(id);
         prenotazioneRepository.delete(trovata);
     }
-   
+
 }

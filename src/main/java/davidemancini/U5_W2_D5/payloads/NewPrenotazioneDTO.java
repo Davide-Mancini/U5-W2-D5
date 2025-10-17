@@ -8,14 +8,14 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 public record NewPrenotazioneDTO(
-        @NotNull
+        @NotNull(message = "Devi inserire una data")
         LocalDate data_richiesta,
-        @NotBlank
+//        @NotBlank
         @Size(min = 1,max = 35)
         String note,
-        @NotNull
+        @NotNull(message = "Assegna un dipendente")
         UUID dipendente,
-        @NotNull
+        @NotNull(message = "Assegna un viaggio")
         UUID viaggio
 ) {
 }

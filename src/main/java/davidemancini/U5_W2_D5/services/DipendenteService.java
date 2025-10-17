@@ -33,19 +33,26 @@ public class DipendenteService {
     private Cloudinary cloudinaryUploader;
 
 
-
+    //SALVA NUOVO DIPENDENTE
     public Dipendente save(NewDipendenteDTO body){
         Dipendente newDipendente = new Dipendente(body.username(),body.nome(), body.cognome(), body.email());
         return dipendenteRepository.save(newDipendente);
     }
+
+    //TROVA TUTTI I DIPENDENTI CON PAGINAZIONE
     public Page<Dipendente> findAll(int pageNumber, int pageSize,String pageSortBy){
+        //CONTROLLO SUL NUMERO DI ELEMENTI PER PAGINA, NON PUO ESSERE PIU DI 30
         if(pageSize>30) pageSize=30;
         Pageable pageable = PageRequest.of(pageNumber,pageSize, Sort.by(pageSortBy));
         return dipendenteRepository.findAll(pageable);
     }
+
+    //RICERCA TRAMITE ID
     public Dipendente findById (UUID id){
         return dipendenteRepository.findById(id).orElseThrow(()-> new NotFoundException(id));
     }
+
+    //RICERCA TRAMITE ID E UPDATE
     public Dipendente findByIdAndUpdate(UUID id, NewDipendenteDTO body){
         Dipendente trovato = findById(id);
         if (!trovato.getEmail().equals(body.email())){
@@ -60,10 +67,13 @@ public class DipendenteService {
         return dipendenteModificato;
         }
 
+    //RICERCA TRAMITE ID E DELETE
     public void findByIdAndDelete(UUID id){
         Dipendente trovato = findById(id);
         dipendenteRepository.delete(trovato);
     }
+
+    //INSERIMENTO DI UNA NUOVA IMMAGINE COME AVATAR
     public Dipendente uploadAvatar(UUID id, MultipartFile file){
         Dipendente dipendenteTrovato = findById(id);
         try {

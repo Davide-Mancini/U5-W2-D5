@@ -10,6 +10,6 @@ import java.util.UUID;
 
 @Repository
 public interface PrenotazioneRepository extends JpaRepository<Prenotazione, UUID> {
-    //QUERY DERIVATA CHE CERCA PER DIPENDENTE E VIAGGIO, CON _DATAVIAGGIO ACCEDO ALL'ATTRIBUTO DI VIAGGIO
+    //QUERY DERIVATA CHE CERCA PER DIPENDENTE E VIAGGIO, CON _DATAVIAGGIO ACCEDO ALL'ATTRIBUTO DI VIAGGIO CHE è DI TIPO LOCALDATE
     boolean existsByDipendenteAndViaggio_DataViaggio(Dipendente dipendente, LocalDate dataViaggio);
 }

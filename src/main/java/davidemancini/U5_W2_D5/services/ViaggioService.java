@@ -20,19 +20,25 @@ public class ViaggioService {
     @Autowired
     private ViaggiRepository viaggiRepository;
 
-
+    //SALVATAGGIO NUOVO VIAGGIO
     public Viaggio save(NewViaggioDTO body){
         Viaggio newViaggio = new Viaggio(body.destinazione(),body.data_viaggio(),body.stato());
         return viaggiRepository.save(newViaggio);
     }
+
+    //TORNA TUTTI I VIAGGI CON PAGINAZIONE
     public Page<Viaggio> findAll(int pageNumber, int pageSize, String pageSortBy){
         if(pageSize>30) pageSize=30;
         Pageable pageable = PageRequest.of(pageNumber,pageSize, Sort.by(pageSortBy));
         return viaggiRepository.findAll(pageable);
     }
+
+    //RICERCA TRAMITE ID
     public Viaggio findById(UUID id){
         return viaggiRepository.findById(id).orElseThrow(()-> new NotFoundException(id));
     }
+
+    //RICERCA TRAMITE ID E UPDATE
     public Viaggio findByIdAndUpdate(UUID id, NewViaggioDTO body){
         Viaggio trovato = findById(id);
         trovato.setDataViaggio(body.data_viaggio());
@@ -40,6 +46,8 @@ public class ViaggioService {
         Viaggio viaggioModificato = viaggiRepository.save(trovato);
         return viaggioModificato;
     }
+
+    //RIERCA TRAMITE ID E DELETE
     public void findByIdAndDelete(UUID id){
         Viaggio trovato = findById(id);
         viaggiRepository.delete(trovato);

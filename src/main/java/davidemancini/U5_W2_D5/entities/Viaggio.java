@@ -15,6 +15,7 @@ import java.util.UUID;
 public class Viaggio {
     @Id
     @GeneratedValue
+    //IMPEDISCO LA CREAZIONE DEL SETTER DI LOMBOK PER L'ID
     @Setter(AccessLevel.NONE)
     private UUID id;
     private String destinazione;

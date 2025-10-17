@@ -2,8 +2,6 @@ package davidemancini.U5_W2_D5.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -15,6 +13,7 @@ import java.util.UUID;
 public class Dipendente {
     @Id
     @GeneratedValue
+    //IMPEDISCO LA CREAZIONE DEL SETTER DI LOMBOK PER L'ID
     @Setter(AccessLevel.NONE)
     private UUID id;
     private String username;
@@ -31,5 +30,6 @@ public class Dipendente {
         this.cognome = cognome;
         this.email = email;
         this.avatar = "https://ui-avatars.com/api/?name="+nome+"+"+cognome ;
+        //METTO UN AVATAR DI DEFAULT CHE SARà MODIFICABILE.
     }
 }

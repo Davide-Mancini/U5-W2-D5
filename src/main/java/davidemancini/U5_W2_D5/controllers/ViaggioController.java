@@ -34,22 +34,26 @@ public class ViaggioController {
         return viaggioService.save(body);
 
     }
+
     //TUTTI I VIAGGI
     @GetMapping
     public Page<Viaggio> getViaggi(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size, @RequestParam(defaultValue = "destinazione") String sortBy){
         return viaggioService.findAll(page,size,sortBy);
     }
+
     //RITORNA VIAGGIO SPECIFICO TRAMITE ID
     @GetMapping("/{travelsId}")
     public Viaggio getViaggioById(@PathVariable UUID travelsId){
         return viaggioService.findById(travelsId);
     }
+
     //ELIMINA UN VIAGGIO
     @DeleteMapping("/{travelsId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteViaggio (@PathVariable UUID travelsId){
         viaggioService.findByIdAndDelete(travelsId);
     }
+
     //AGGIORNA VIAGGIO
     @PutMapping("/{travelsId}")
     public Viaggio findByIdAndUpdate(@PathVariable UUID travelsId, @RequestBody @Validated NewViaggioDTO body,BindingResult bindingResult){

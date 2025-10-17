@@ -15,6 +15,7 @@ import java.util.UUID;
 public class Prenotazione {
     @Id
     @GeneratedValue
+    //IMPEDISCO LA CREAZIONE DEL SETTER DI LOMBOK PER L'ID
     @Setter(AccessLevel.NONE)
     private UUID id;
     private LocalDate data_richiesta;
@@ -25,8 +26,9 @@ public class Prenotazione {
     @ManyToOne
     @JoinColumn(name = "viaggio_id")
     private Viaggio viaggio;
-    //COSTRUTTORE
 
+
+    //COSTRUTTORE
     public Prenotazione(LocalDate data_richiesta, String note, Dipendente dipendente, Viaggio viaggio) {
         this.data_richiesta = data_richiesta;
         this.note = note;

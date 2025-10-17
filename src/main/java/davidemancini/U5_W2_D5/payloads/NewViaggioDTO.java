@@ -7,11 +7,11 @@ import jakarta.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 public record NewViaggioDTO(
-        @NotBlank
+        @NotBlank(message = "Destinazione obbligatoria")
         String destinazione,
-        @NotNull
+        @NotNull(message = "Data viaggio obbligatoria")
         LocalDate data_viaggio,
-        @NotNull
+        @NotNull(message = "Inserisci lo stato")
         Stato stato
 ) {
 }
