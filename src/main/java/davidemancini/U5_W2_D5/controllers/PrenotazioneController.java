@@ -37,18 +37,12 @@ public class PrenotazioneController {
         Dipendente dipendenteTrovato = dipendenteService.findById(body.dipendente());
         Viaggio viaggiotrovato = viaggioService.findById(body.viaggio());
 
-        //PER VEDERE SE IL DIPENDENTE HA GIA UN VIAGGIO PRENOTATO: RECUPERO IL DIPENDENTE E VEDO SE NELLA SUA LISTA DI PRENOTAZIONI C'è GIA UN VIAGGIO CON DATA UGUALE
-        //A QUELLA DEL VIAGGIO CHE STIAMO PRENOTANDO
-        //boolean giaPrenotato=  dipendenteTrovato.getListaDiPrenotazioni().stream().anyMatch(prenotazione -> prenotazione.getViaggio().getData_viaggio().equals(viaggiotrovato.getData_viaggio()));
-
 
         //bindinresult MI PERMETTE DI GESTIRE GLI ERRORI PIU FACILMENTE
         if (bindingResult.hasErrors()){
             throw new MyValidationException(bindingResult.getFieldErrors().stream().map(fieldError -> fieldError.getDefaultMessage()).toList());
         }
-//        if (giaPrenotato){
-//            throw new BadRequestException("Non puoi prenotare viaggi per la stessa data");
-//        }
+//
 
         return prenotazioneService.save(body);
 

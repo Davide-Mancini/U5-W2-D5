@@ -5,6 +5,7 @@ import davidemancini.U5_W2_D5.entities.Prenotazione;
 import davidemancini.U5_W2_D5.entities.Viaggio;
 import davidemancini.U5_W2_D5.exceptions.MyBadRequestException;
 import davidemancini.U5_W2_D5.exceptions.NotFoundException;
+import davidemancini.U5_W2_D5.payloads.NewDipendenteDTO;
 import davidemancini.U5_W2_D5.payloads.NewPrenotazioneDTO;
 import davidemancini.U5_W2_D5.repositories.DipendenteRepository;
 import davidemancini.U5_W2_D5.repositories.PrenotazioneRepository;
@@ -63,4 +64,5 @@ public class PrenotazioneService {
         Prenotazione trovata = findById(id);
         prenotazioneRepository.delete(trovata);
     }
+   
 }
