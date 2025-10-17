@@ -51,16 +51,16 @@ private DipendenteService dipendenteService;
     //ELIMINA UN DIPENDENTE
     @DeleteMapping("/{employeeId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteDipendente (@PathVariable UUID id){
-        dipendenteService.findByIdAndDelete(id);
+    public void deleteDipendente (@PathVariable UUID employeeId){
+        dipendenteService.findByIdAndDelete(employeeId);
     }
     //AGGIORNA DIPENDENTE
     @PutMapping("/{employeeId}")
-    public Dipendente findByIdAndUpdate(@PathVariable UUID id, @RequestBody @Validated NewDipendenteDTO body,BindingResult bindingResult){
+    public Dipendente findByIdAndUpdate(@PathVariable UUID employeeId, @RequestBody @Validated NewDipendenteDTO body,BindingResult bindingResult){
         if (bindingResult.hasErrors()){
             throw new MyValidationException(bindingResult.getFieldErrors().stream().map(fieldError -> fieldError.getDefaultMessage()).toList());
         }
-       return dipendenteService.findByIdAndUpdate(id,body);
+       return dipendenteService.findByIdAndUpdate(employeeId,body);
     }
 
 }

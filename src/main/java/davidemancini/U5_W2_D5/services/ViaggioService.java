@@ -32,7 +32,7 @@ public class ViaggioService {
     public Viaggio findById(UUID id){
         return viaggiRepository.findById(id).orElseThrow(()-> new NotFoundException(id));
     }
-    public Viaggio findByIdAndDelete(UUID id, NewViaggioDTO body){
+    public Viaggio findByIdAndUpdate(UUID id, NewViaggioDTO body){
         Viaggio trovato = findById(id);
         trovato.setData_viaggio(body.data_viaggio());
         trovato.setDestinazione(body.destinazione());

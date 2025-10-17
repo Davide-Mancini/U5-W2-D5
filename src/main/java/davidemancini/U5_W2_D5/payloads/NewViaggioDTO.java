@@ -11,7 +11,7 @@ public record NewViaggioDTO(
         String destinazione,
         @NotNull
         LocalDate data_viaggio,
-        @NotBlank
+        @NotNull
         Stato stato
 ) {
 }
