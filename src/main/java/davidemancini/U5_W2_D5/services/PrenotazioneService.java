@@ -8,6 +8,7 @@ import davidemancini.U5_W2_D5.payloads.NewPrenotazioneDTO;
 import davidemancini.U5_W2_D5.repositories.DipendenteRepository;
 import davidemancini.U5_W2_D5.repositories.PrenotazioneRepository;
 import davidemancini.U5_W2_D5.repositories.ViaggiRepository;
+import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -26,10 +27,14 @@ public class PrenotazioneService {
     @Autowired
     private ViaggiRepository viaggiRepository;
 
-    public Prenotazione save(NewPrenotazioneDTO body){
+    public Prenotazione save(NewPrenotazioneDTO body) throws BadRequestException {
         Dipendente dipendenteTrovato = dipendenteRepository.findById(body.dipendente()).orElseThrow(()-> new NotFoundException(body.dipendente()));
         Viaggio viaggioTrovato = viaggiRepository.findById(body.viaggio()).orElseThrow(()-> new NotFoundException(body.viaggio()));
         Prenotazione newPrenotazione = new Prenotazione(body.data_richiesta(), body.note(), dipendenteTrovato,viaggioTrovato);
+        //CONTROLLO GIUSTO SULLA DATA DEL NUOVO VIAGGIO 
+        if (newPrenotazione.getViaggio().getData_viaggio().equals(viaggioTrovato.getData_viaggio())){
+            throw new BadRequestException("Non puoi prenotare due viaggi con la stessa data");
+        }
         return prenotazioneRepository.save(newPrenotazione);
     }
     public Page<Prenotazione> findAll(int pageNumber, int pageSize, String pageSortBy){

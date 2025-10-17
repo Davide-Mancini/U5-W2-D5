@@ -1,11 +1,9 @@
 package davidemancini.U5_W2_D5.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -24,6 +22,7 @@ public class Dipendente {
     private String cognome;
     private String email;
     private String avatar;
+
     //COSTRUTTORE
 
     public Dipendente(String username, String nome, String cognome, String email) {
