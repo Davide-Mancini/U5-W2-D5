@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.UUID;
 
@@ -61,6 +62,11 @@ private DipendenteService dipendenteService;
             throw new MyValidationException(bindingResult.getFieldErrors().stream().map(fieldError -> fieldError.getDefaultMessage()).toList());
         }
        return dipendenteService.findByIdAndUpdate(employeeId,body);
+    }
+    //AGGIUNGI IMMAGINE
+    @PatchMapping("/{employeeId}/avatar")
+    public Dipendente uploadImage(@PathVariable UUID employeeId, @RequestParam("avatar")MultipartFile file){
+        return dipendenteService.uploadAvatar(employeeId,file);
     }
 
 }
