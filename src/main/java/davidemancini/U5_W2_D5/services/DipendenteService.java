@@ -6,8 +6,13 @@ import davidemancini.U5_W2_D5.payloads.NewDipendenteDTO;
 import davidemancini.U5_W2_D5.repositories.DipendenteRepository;
 import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -15,9 +20,15 @@ public class DipendenteService {
     @Autowired
     private DipendenteRepository dipendenteRepository;
 
+
     public Dipendente save(NewDipendenteDTO body){
         Dipendente newDipendente = new Dipendente(body.username(),body.nome(), body.cognome(), body.email());
         return dipendenteRepository.save(newDipendente);
+    }
+    public Page<Dipendente> findAll(int pageNumber, int pageSize,String pageSortBy){
+        if(pageSize>30) pageSize=30;
+        Pageable pageable = PageRequest.of(pageNumber,pageSize, Sort.by(pageSortBy));
+        return dipendenteRepository.findAll(pageable);
     }
     public Dipendente findById (UUID id){
         return dipendenteRepository.findById(id).orElseThrow(()-> new NotFoundException(id));
